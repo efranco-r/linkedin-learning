@@ -11,12 +11,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public abstract class AbstractDao<T> implements IDao<T> {
-    private EntityManager entityManager = EntityManagerUtil.getEntityManager();;
+    private final EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
     private Class<T> clazz;
 
     public Optional<T> get(int id) {
-        //TODO Implement me please!
         return Optional.ofNullable(entityManager.find(clazz, id));
     }
 
@@ -28,15 +27,15 @@ public abstract class AbstractDao<T> implements IDao<T> {
     }
 
     public void save(T type) {
-        executeInsideTransaction(entityManager -> entityManager.persist(type));
+        executeInsideTransaction(entityMng -> entityManager.persist(type));
     }
 
     public void update(T type) {
-        executeInsideTransaction(entityManager -> entityManager.merge(type));
+        executeInsideTransaction(entityMng -> entityManager.merge(type));
     }
 
     public void delete(T type) {
-        executeInsideTransaction(entityManager -> entityManager.remove(type));
+        executeInsideTransaction(entityMng -> entityManager.remove(type));
     }
 
     public void setClazz(Class<T> clazz) {

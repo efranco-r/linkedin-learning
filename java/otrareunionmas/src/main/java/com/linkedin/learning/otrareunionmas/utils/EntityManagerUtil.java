@@ -4,7 +4,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+@SuppressWarnings("java:S125")
 public class EntityManagerUtil {
+    private EntityManagerUtil() {
+        super();
+    }
+
     public static EntityManager getEntityManager() {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("OtraReunionMas");
         return factory.createEntityManager();

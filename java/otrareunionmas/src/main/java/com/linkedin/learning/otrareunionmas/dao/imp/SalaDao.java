@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class SalaDao extends AbstractDao<Sala>{
+    private static final String CAPACIDAD = "capacidad";
     public SalaDao() {
         setClazz(Sala.class);
     }
@@ -26,7 +27,7 @@ public class SalaDao extends AbstractDao<Sala>{
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Sala> criteriaQuery = cb.createQuery(Sala.class);
         Root<Sala> root = criteriaQuery.from(Sala.class);
-        criteriaQuery.select(root).where(cb.ge(root.get("capacidad"), num));
+        criteriaQuery.select(root).where(cb.ge(root.get(CAPACIDAD), num));
         Query query = getEntityManager().createQuery(criteriaQuery);
         return query.getResultList();
     }
@@ -36,8 +37,8 @@ public class SalaDao extends AbstractDao<Sala>{
         CriteriaQuery<Sala> criteriaQuery = cb.createQuery(Sala.class);
         Root<Sala> root = criteriaQuery.from(Sala.class);
 
-        Predicate capacidadMinima = cb.ge(root.get("capacidad"), num);
-        Predicate capacidadMaxima = cb.lessThanOrEqualTo(root.get("capacidad"), num * 2);
+        Predicate capacidadMinima = cb.ge(root.get(CAPACIDAD), num);
+        Predicate capacidadMaxima = cb.lessThanOrEqualTo(root.get(CAPACIDAD), num * 2);
         Predicate rangoCapacidad = cb.and(capacidadMinima, capacidadMaxima);
 
         criteriaQuery.select(root).where(rangoCapacidad);

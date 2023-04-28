@@ -12,11 +12,14 @@ import javax.persistence.NoResultException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Hello world!
  */
 public class App {
+    private static final Logger logger = Logger.getLogger(App.class.getName());
     public static void main(String[] args) {
         // DAOs
         ReunionDao reunionDao = new ReunionDao();
@@ -84,15 +87,15 @@ public class App {
 
         // Recuperación de datos
         List<Reunion> reuniones = reunionDao.getAll();
-        System.out.println("*** " + reuniones);
+        logger.log(Level.INFO, "*** {0}", reuniones);
 
         try {
-            System.out.println("Tu próxima reunión es: " + reunionDao.proximaReunion());
+            logger.log(Level.INFO, "Tu próxima reunión es: {0}", reunionDao.proximaReunion());
         } catch (NoResultException nre) {
-            System.out.println("No tienes ninguna reunión a la vista");
+            logger.log(Level.INFO, "No tienes ninguna reunión a la vista");
         }
 
         List<Reunion> reunionesManyana = reunionDao.reunionesMannana();
-        System.out.println("Para mañana: " + reunionesManyana);
+        logger.log(Level.INFO, "Para mañana: {0}", reunionesManyana);
     }
 }
